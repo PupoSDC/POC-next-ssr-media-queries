@@ -1,5 +1,14 @@
 import { FunctionComponent } from "react";
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import { useAddresses } from "src/queries/useAddresses";
 
 export const AddressesTable: FunctionComponent = () => {

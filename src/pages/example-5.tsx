@@ -12,15 +12,16 @@ const MATCH_MOBILE_USER_AGENTS =
   /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i;
 
 type IndexPageProps = ReactQueryPageProps & {
-  isDesktopDeviceDetected: boolean
-}
+  isDesktopDeviceDetected: boolean;
+};
 
-const IndexPage: NextPage<IndexPageProps> = ({
-  isDesktopDeviceDetected
-}) => {
-  const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up("sm"), {
-    defaultMatches: isDesktopDeviceDetected,
-  });
+const IndexPage: NextPage<IndexPageProps> = ({ isDesktopDeviceDetected }) => {
+  const isDesktop = useMediaQuery<Theme>(
+    (theme) => theme.breakpoints.up("sm"),
+    {
+      defaultMatches: isDesktopDeviceDetected,
+    }
+  );
 
   return (
     <AppContainer title={"Example 5: media query hook with smart pre-fetching"}>
@@ -29,7 +30,9 @@ const IndexPage: NextPage<IndexPageProps> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<IndexPageProps> = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps<IndexPageProps> = async ({
+  req,
+}) => {
   const queryClient = new QueryClient();
   const userAgent = req.headers["user-agent"];
   const isDesktop =

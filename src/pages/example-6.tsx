@@ -11,7 +11,7 @@ import { Media } from "src/theme";
 const MATCH_MOBILE_USER_AGENTS =
   /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i;
 
-const IndexPage: NextPage<> = () => {
+const IndexPage: NextPage = () => {
   return (
     <AppContainer title={"Example 6: fresnel with smart pre-fetching"}>
       <Media at="xs">
