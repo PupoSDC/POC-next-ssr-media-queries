@@ -12,10 +12,10 @@ const IndexPage: NextPage = () => {
   return (
     <AppContainer title={"Example 3: Fresnel"}>
       <Media at="xs">
-        <HomePageDesktop />
+        <HomePageMobile />
       </Media>
       <Media greaterThanOrEqual="sm">
-        <HomePageMobile />
+        <HomePageDesktop />
       </Media>
     </AppContainer>
   );

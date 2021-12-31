@@ -11,8 +11,17 @@ import { prefetchUserData } from "src/queries/useUserData";
 const MATCH_MOBILE_USER_AGENTS =
   /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i;
 
-const IndexPage: NextPage = () => {
-  const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up("sm"));
+type IndexPageProps = ReactQueryPageProps & {
+  isDesktopDeviceDetected: boolean
+}
+
+const IndexPage: NextPage<IndexPageProps> = ({
+  isDesktopDeviceDetected
+}) => {
+  const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up("sm"), {
+    defaultMatches: isDesktopDeviceDetected,
+  });
+
   return (
     <AppContainer title={"Example 5: media query hook with smart pre-fetching"}>
       {isDesktop ? <HomePageDesktop /> : <HomePageMobile />}
@@ -20,13 +29,11 @@ const IndexPage: NextPage = () => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  ReactQueryPageProps
-> = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps<IndexPageProps> = async ({ req }) => {
   const queryClient = new QueryClient();
   const userAgent = req.headers["user-agent"];
   const isDesktop =
-    userAgent && !Boolean(userAgent.match(MATCH_MOBILE_USER_AGENTS));
+    !!userAgent && !Boolean(userAgent.match(MATCH_MOBILE_USER_AGENTS));
 
   await Promise.all([
     prefetchAddresses(queryClient),
@@ -35,6 +42,7 @@ export const getServerSideProps: GetServerSideProps<
 
   return {
     props: {
+      isDesktopDeviceDetected: isDesktop,
       dehydratedState: dehydrate(queryClient),
     },
   };

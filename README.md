@@ -100,29 +100,46 @@ const IndexPage: NextPage = () => {
 
 The good:
 
-- Without JS, the first render is appropriate to the current device size 
+- Correct tree representation, which makes testing trivial.
+- This is the most idiomatic solution, and therefore the most readable.
+- With correct default value, we can do "mobile first", guaranteeing the ideal layout
+  for the critical scenario
+- No useless HTML sent on first render
 
 The bad:
 
-- Since data is loaded after mounting, the first render will be incomplete
-- Since we are using CSS to hide unwanted parts of the app, those parts of the
-  app will still be part of the initial HTML load. 
-- Likewise, on mobile, the unecessary query from `<UserProfile />` will still be
-  performed.
-- Since the React tree will include nodes that are not part of the DOM.
-- Testing for visibility is hard since the visibility of the tree is determined by CSS
-- Readability is hard, specially given that the `display` control would probably end up 
-  in a css distant from the JSX.
-
-
-
-
+- Defaults to mobile first on first render, completely missing the mark for the desktop
+  scenario
 
 ## Implementation 3
 
 [Demo](https://nest-ssr-media-queries-4ivkwwyrp-puposdc.vercel.app/example-3)
 
-Fresnel
+[Fresnel](https://github.com/artsy/fresnel) as a library provides a more complete 
+implementation of solution 1. How does the code look:
+
+```tsx
+    <AppContainer title={"Example 3: Fresnel"}>
+      <Media at="xs">
+        <HomePageDesktop />
+      </Media>
+      <Media greaterThanOrEqual="sm">
+        <HomePageMobile />
+      </Media>
+    </AppContainer>
+```
+
+The good:
+
+- Fresnel uses css for the initial layout, but then JS takes over so that we have 
+  the best "of both worlds"
+- Correct tree representation, which makes testing trivial. 
+- Purely declarative approach
+
+
+The bad:
+
+- Useless HTML is still sent
 
 
 ## Implementation 4: Media query with preloading
@@ -134,14 +151,14 @@ Fresnel
 
 ## Summary
 
-|                                            | 0: Baseline            | 1: Custom Component    | 2: Media query hook    |
-|--------------------------------------------|------------------------|------------------------|------------------------|
-| [Perf] Correct first render with no JS (M) | :white_check_mark:     | :white_check_mark:     | :white_check_mark:     |
-| [Perf] Correct first render with no JS (D) | :white_check_mark:     | :white_check_mark:     | :white_check_mark:     |
-| [Perf] Correct data on first request (M)   | :x:                    | :x:                    | :x:                    |
-| [Perf] Correct data on first request (D)   | :x:                    | :x:                    | :x:                    |
-| [Perf] Correct HTML on first request (M)   | :x:                    | :x:                    | :x:                    |
-| [Perf] Correct HTML on first request (D)   | :x:                    | :x:                    | :x:                    |
-| [DX| Correct tree representation           | :x:                    | :x:                    | :x:                    |
-| [DX] Code readability / safeness           | :x:                    | :x:                    | :x:                    |
-| [DX] Testability                           | :x:                    | :x:                    | :x:                    |
+|                                                    | 0: Baseline        | 1: Custom Component | 2: Media query hook | 3: Fresnel          |
+|----------------------------------------------------|--------------------|---------------------|---------------------|---------------------|
+| **[Perf]** Correct first render with no JS **(M)** | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+| **[Perf]** Correct first render with no JS **(D)** | :white_check_mark: | :white_check_mark:  | :x:                 | :white_check_mark:  |
+| **[Perf]** Correct data on first request **(M)**   | :x:                | :x:                 | :white_check_mark:  | :x:                 |
+| **[Perf]** Correct data on first request **(D)**   | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+| **[Perf]** Correct HTML on first request **(M)**   | :x:                | :x:                 | :white_check_mark:  | :x:                 |  
+| **[Perf]** Correct HTML on first request **(D)**   | :x:                | :x:                 | :x:                 | :x:                 |
+| **[DX]** Correct tree representation               | :x:                | :x:                 | :white_check_mark:  | :white_check_mark:  |
+| **[DX]** Code readability / safeness               | :x:                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
+| **[DX]** Testability                               | :x:                | :x:                 | :white_check_mark:  | :white_check_mark:  |
