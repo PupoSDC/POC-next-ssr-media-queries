@@ -11,7 +11,7 @@ import { prefetchUserData } from "src/queries/useUserData";
 const IndexPage: NextPage = () => {
   const isDesktop = useMediaQuery<Theme>((theme) => theme.breakpoints.up("sm"));
   return (
-    <AppContainer title={"Example 4: media query hook with prefetching"}>
+    <AppContainer title={"Example 4: media query hook with pre-fetching"}>
       {isDesktop ? <HomePageDesktop /> : <HomePageMobile />}
     </AppContainer>
   );

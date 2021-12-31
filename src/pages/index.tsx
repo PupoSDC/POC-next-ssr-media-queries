@@ -8,18 +8,38 @@ const IndexPage: NextPage = () => {
     <AppContainer title={"The only Page"}>
       <ul>
         <li>
-          <Link href="/hook-media-query">
-            <a>hook media query</a>
+          <Link href="/example-0">
+            <a>Example 0: Css and no preloading</a>
           </Link>
         </li>
         <li>
-          <Link href="/fresnel">
-            <a>fresnel</a>
+          <Link href="/example-1">
+            <a>Example 1: Css based components</a>
           </Link>
         </li>
         <li>
-          <Link href="/home-brew">
-            <a>home brew</a>
+          <Link href="/example-2">
+            <a>Example 2: media query hook</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/example-3">
+            <a>Example 3: Fresnel</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/example-4">
+            <a>Example 4: media query hook with pre-fetching</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/example-5">
+            <a>Example 5: media query hook with smart pre-fetching</a>
+          </Link>
+        </li>
+        <li>
+          <Link href="/example-6">
+            <a>Example 6: fresnel with smart pre-fetching</a>
           </Link>
         </li>
       </ul>
