@@ -105,6 +105,7 @@ The good:
 - With correct default value, we can do "mobile first", guaranteeing the ideal layout
   for the critical scenario
 - No useless HTML sent on first render
+- Since only half of the three is computed, no useless requests are fired
 
 The bad:
 
@@ -134,12 +135,14 @@ The good:
 - Fresnel uses css for the initial layout, but then JS takes over so that we have 
   the best "of both worlds"
 - Correct tree representation, which makes testing trivial. 
-- Purely declarative approach
-
+- Since only half of the three is computed, no useless requests are fired
+- Purely declarative approach makes for a readable solution.
+- The API allows for more than a simple `isMobile ? : a : b` with no damage
+  to code readability
 
 The bad:
 
-- Useless HTML is still sent
+- Useless HTML is still sent to the client on first render.
 
 
 ## Implementation 4: Media query with preloading
@@ -155,7 +158,7 @@ The bad:
 |----------------------------------------------------|--------------------|---------------------|---------------------|---------------------|
 | **[Perf]** Correct first render with no JS **(M)** | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | **[Perf]** Correct first render with no JS **(D)** | :white_check_mark: | :white_check_mark:  | :x:                 | :white_check_mark:  |
-| **[Perf]** Correct data on first request **(M)**   | :x:                | :x:                 | :white_check_mark:  | :x:                 |
+| **[Perf]** Correct data on first request **(M)**   | :x:                | :x:                 | :white_check_mark:  | :white_check_mark:  |
 | **[Perf]** Correct data on first request **(D)**   | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | **[Perf]** Correct HTML on first request **(M)**   | :x:                | :x:                 | :white_check_mark:  | :x:                 |  
 | **[Perf]** Correct HTML on first request **(D)**   | :x:                | :x:                 | :x:                 | :x:                 |
