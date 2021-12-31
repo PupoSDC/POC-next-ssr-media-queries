@@ -4,10 +4,10 @@ import { UserProfile } from "./UserProfile";
 
 export const HomePageDesktop = () => (
   <Grid container>
-    <Grid item xs={0} display={{ xs: "none", sm: "block" }} sm={3}>
+    <Grid item xs={3}>
       <UserProfile />
     </Grid>
-    <Grid item xs={12} sm={9}>
+    <Grid item xs={9}>
       <AddressesTable />
     </Grid>
   </Grid>
