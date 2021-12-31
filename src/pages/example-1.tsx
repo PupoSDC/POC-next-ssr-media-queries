@@ -1,9 +1,9 @@
+import { dehydrate, QueryClient } from "react-query";
 import { GetServerSideProps, NextPage } from "next";
+import { styled } from "@mui/material";
 import { AppContainer } from "src/containers/AppContainer";
 import { ReactQueryPageProps } from "src/types/Next";
-import { dehydrate, QueryClient } from "react-query";
 import { HomePageDesktop } from "src/containers/HomePageDesktop";
-import { styled } from "@mui/material";
 import { HomePageMobile } from "src/containers/HomePageMobile";
 
 const MobileOnly = styled("div")(({ theme }) => ({

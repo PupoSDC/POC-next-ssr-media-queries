@@ -1,5 +1,7 @@
 # POC Next SSR media queries
 
+TLDR: `useMediaQuery` is more versatile, and future prood. `Fresnel` is ok.
+
 ## The Problem
 
 How can we best deliver Server Side Rendered (SSR) pages that drastically differ 
@@ -11,7 +13,6 @@ the server would be undesirable when compared to performing no SSR at all.
 We have a page that is built from two API queries. Each of them are quite slow.
 The mobile design only requires one of these queries to be complete while the 
 browser version requires both of them.
-
 
 ## Implementations
 
@@ -40,7 +41,7 @@ The bad:
 - Since data is loaded after mounting, the first render will be incomplete
 - Since we are using CSS to hide unwanted parts of the app, those parts of the
   app will still be part of the initial HTML load. 
-- Likewise, on mobile, the unecessary query from `<UserProfile />` will still be
+- Likewise, on mobile, the unnecessary query from `<UserProfile />` will still be
   performed.
 - Since the React tree will include nodes that are not part of the DOM.
 - Testing for visibility is hard since the visibility of the tree is determined by CSS
@@ -260,7 +261,7 @@ leading to unnecessary Server work, and unnecessary payload being delivered in t
 | **[Perf]** Correct first render with no JS **(D)** | :x:                              | :white_check_mark:                       | :white_check_mark:                   |
 | **[Perf]** Correct data on first request **(M)**   | :white_check_mark:               | :white_check_mark:                       | :white_check_mark:                   |
 | **[Perf]** Correct data on first request **(D)**   | :x:                              | :white_check_mark:                       | :white_check_mark:                   |
-| **[Perf]** Correct HTML on first request **(M)**   | :white_check_mark:               | :white_check_mark:                       | :white_check_mark:                   |
+| **[Perf]** Correct HTML on first request **(M)**   | :white_check_mark:               | :white_check_mark:                       | :x:                                  |
 | **[Perf]** Correct HTML on first request **(D)**   | :x:                              | :white_check_mark:                       | :x:                                  |
 | **[DX]** Correct tree representation               | :white_check_mark:               | :white_check_mark:                       | :white_check_mark:                   |
 | **[DX]** Code readability / safeness               | :white_check_mark:               | :white_check_mark:                       | :white_check_mark:                   |
@@ -269,8 +270,8 @@ leading to unnecessary Server work, and unnecessary payload being delivered in t
 
 ## Discussion
 
-My subjective opinion is that `Fresnel` although an interesting API represents a risk without 
-enough benefits to justify it.
+My subjective opinion is that `Fresnel` although an interesting API represents a risk without enough benefits 
+to justify it.
 
 From a pure React point of view, `Fresnel` breaks one of the ground rules of React where elements that are not
 intended to be part of the DOM should not get rendered. `Fresnel` does this so that feature complete HTML is 
@@ -280,4 +281,8 @@ require JS to execute. This is however the type of product `Hublo` is delivering
 `useMediaQuery` on the other hand provides a much more kosher `react` API, that, since it's JS based, is more 
 future proof. In fact, The logic done on implementation 5, could be abstracted away into a custom Hook that
 delivers the same functionality in a similar fashion. 
+
+`Fresnel` is a valid option if we are not performing any complex server side rendering with most of our data
+fetching queries being done on the client. IT however locks us out of more complex implementations in the future
+and should not be chosen pur app is more of `PWA` than a `blog`.
 

@@ -1,14 +1,6 @@
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import { FunctionComponent } from "react";
-import { useAddresses } from "src/queries/useAdresses";
+import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import { useAddresses } from "src/queries/useAddresses";
 
 export const AddressesTable: FunctionComponent = () => {
   const addresses = useAddresses();

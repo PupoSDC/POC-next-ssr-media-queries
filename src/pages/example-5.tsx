@@ -1,11 +1,11 @@
 import { GetServerSideProps, NextPage } from "next";
+import { Theme, useMediaQuery } from "@mui/material";
 import { AppContainer } from "src/containers/AppContainer";
 import { ReactQueryPageProps } from "src/types/Next";
 import { dehydrate, QueryClient } from "react-query";
 import { HomePageDesktop } from "src/containers/HomePageDesktop";
-import { Theme, useMediaQuery } from "@mui/material";
 import { HomePageMobile } from "src/containers/HomePageMobile";
-import { prefetchAddresses } from "src/queries/useAdresses";
+import { prefetchAddresses } from "src/queries/useAddresses";
 import { prefetchUserData } from "src/queries/useUserData";
 
 const MATCH_MOBILE_USER_AGENTS =

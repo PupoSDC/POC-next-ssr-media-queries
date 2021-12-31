@@ -1,6 +1,6 @@
-import { AppBar, styled, Toolbar, Typography, useTheme } from "@mui/material";
-import Head from "next/head";
 import { FunctionComponent } from "react";
+import Head from "next/head";
+import { AppBar, styled, Toolbar, Typography } from "@mui/material";
 import { mediaStyles } from "src/theme";
 
 export type AppHtmlHeadProps = {

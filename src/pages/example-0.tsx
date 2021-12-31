@@ -1,8 +1,8 @@
+import { dehydrate, QueryClient } from "react-query";
 import { GetServerSideProps, NextPage } from "next";
+import { Grid } from "@mui/material";
 import { AppContainer } from "src/containers/AppContainer";
 import { ReactQueryPageProps } from "src/types/Next";
-import { dehydrate, QueryClient } from "react-query";
-import { Grid } from "@mui/material";
 import { UserProfile } from "src/containers/UserProfile";
 import { AddressesTable } from "src/containers/AddressesTable";
 
