@@ -1,6 +1,6 @@
 # POC Next SSR media queries
 
-TLDR: `useMediaQuery` is more versatile, and future prood. `Fresnel` is ok.
+TLDR: `useMediaQuery` is more versatile, and future proof. `Fresnel` is ok.
 
 ## The Problem
 
@@ -149,8 +149,6 @@ The bad:
 
 ## Summary of Examples with client side queries
 
-MY conclusions as a table:
-
 |                                                    | 0: Baseline        | 1: Custom Component | 2: Media query hook | 3: Fresnel          |
 |----------------------------------------------------|--------------------|---------------------|---------------------|---------------------|
 | **[Perf]** Correct first render with no JS **(M)** | :white_check_mark: | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
@@ -163,25 +161,24 @@ MY conclusions as a table:
 | **[DX]** Code readability / safeness               | :x:                | :white_check_mark:  | :white_check_mark:  | :white_check_mark:  |
 | **[DX]** Testability                               | :x:                | :x:                 | :white_check_mark:  | :white_check_mark:  |
 
-There are therefor 2 viable options: `Fresnel` and `Media query hook`. 
+There are therefore 2 viable options: `Fresnel` and `Media query hook`. 
 
 The main difference between the 2 comes down to which API you like the most. `useMediaQuery` returns a JS primitive which means the sky is the 
-limit. Multiple queries can be combined and more complex scenarios  devisedas. On the other hand, Fresnel declarative approach allows for clear 
-code to be clear. Objectively, I would consider this a tie between the two. Subjectively, I prefer the most versatile, future proof, and well
-established `useMediaQuery` solution
+limit. Multiple queries can be combined and more complex scenarios  devised. On the other hand, Fresnel declarative approach allows for clear
+"do one thing and do it well" code to be written. Objectively, I would consider this a tie between the two. Subjectively, I prefer the 
+most versatile, future proof, and well established `useMediaQuery` solution
 
 In terms of `delivery` each of these libraries has an advantage and disadvantage. 
 
 `useMediaQuery` only renders one path of the tree, which we should default to the mobile one. `Fresnel` computes the entire tree and all
 possible paths so that both scenarios are ready to show on the client. So in the end we have to choose whether we value reducing the 
-payload we sent to the customer or we prefer to have a solution that covers all basis. I expect that the payload and server time difference will 
-be minimal so `Fresnel` has an edge in this regard.
-
+payload we sent to the customer or we prefer to have a solution that covers all basis. I expect that the payload and server time 
+difference will be minimal so `Fresnel` has an edge in this regard.
 
 ## SSR queries pre fetching
 
 In these scenarios we do server side query pre-fetching before showing the page. Only `Fresnel` and `Media query hook` are considered
-since the other solutions already provide no advantage.
+since the other solutions have been shown to provide no advantage over these two.
 
 ### Implementation 4: Media query hook with pre-fetching
 
@@ -276,13 +273,12 @@ to justify it.
 From a pure React point of view, `Fresnel` breaks one of the ground rules of React where elements that are not
 intended to be part of the DOM should not get rendered. `Fresnel` does this so that feature complete HTML is 
 delivered. This makes perfect sense for static websites where it's feasible to deliver a product that does not
-require JS to execute. This is however the type of product `Hublo` is delivering.
+require JS to execute. This is however not the type of product `Hublo` is delivering.
 
 `useMediaQuery` on the other hand provides a much more kosher `react` API, that, since it's JS based, is more 
 future proof. In fact, The logic done on implementation 5, could be abstracted away into a custom Hook that
 delivers the same functionality in a similar fashion. 
 
 `Fresnel` is a valid option if we are not performing any complex server side rendering with most of our data
-fetching queries being done on the client. IT however locks us out of more complex implementations in the future
+fetching queries being done on the client. It however locks us out of more complex implementations in the future
 and should not be chosen pur app is more of `PWA` than a `blog`.
-
